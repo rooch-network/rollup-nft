@@ -76,6 +76,35 @@ library SMT {
         return cursor;
     }
 
+    function calculateRootV2(
+        bytes32 key,
+        bytes32 value,
+        bytes32[256] memory siblings
+    ) internal pure returns (bytes32) {
+         uint256 siblingLen = siblings.length;
+
+        // 将元素的密钥和值组合在一起，并用字节表示成位序列
+        bytes memory element = abi.encodePacked(key, value);
+        bytes memory elementBits = reverseBits(element);
+
+        // 截取位数组，去掉最后 siblingLen 位（用于确定兄弟节点的方向）
+        bool[] memory skipedElementBits = new bool[](elementBits.length - siblingLen);
+        for (uint i = 0; i < skipedElementBits.length; i++) {
+            skipedElementBits[i] = element
+        }
+        bytes32 resultHash = root;
+        for (uint i = 0; i < siblingLen; i++) {
+            bool bit = skipedElementBits[i];
+            bytes32 siblingHash = siblings[i];
+
+            if (bit) { // right
+                resultHash = cryptoInternalNodeHash(siblingHash, resultHash);
+            } else { // left
+                resultHash = cryptoInternalNodeHash(resultHash, siblingHash);
+            }
+        }
+    }
+
     function append(
         bytes32 root,
         bytes32 key,
