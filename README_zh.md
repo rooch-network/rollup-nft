@@ -1,6 +1,8 @@
 # rollup-nft
 
-大规模 NFT 发行工具。这是一个演示项目，用来验证状态扩容的想法。
+[English](./README.md)|中文
+
+Rollup NFT 发行工具。这是一个演示项目，用来验证状态扩容以及 Layer1 和 Layer2 基于 Object 模式互操作的想法。
 
 ## 背景描述
 
@@ -19,7 +21,7 @@
 3. 链上只保存状态树的根，同时需要用 Solidity 实现链上 SMT。
 4. 提供一种 RollupNFT 的规范。
 5. RollupNFT 提供两种更新方案：
-   1. 完全链上更新，初了初始化发行之外，新增 NFT 需要通过 SMT 的不存在证明 + 新的 NFT 生成新的状态树的根。这种情况下资产安全由链上智能合约保证。
+   1. 完全链上更新，除了初始化发行之外，新增 NFT 需要通过 SMT 的不存在证明 + 新的 NFT 生成新的状态树的根。这种情况下资产安全由链上智能合约保证。
    2. 允许链下更新，链下的状态树可以直接更新，并定时提交状态树的根到链上。这种情况下资产安全需要通过其他方式保证，比如欺诈证明或者 ZK Prover。
 6. 将这个 SMT 挂载到 Rooch 的 Layer2 中，它在 Move 合约中会表达为一个 Table 结构，开发者可以在 Move 合约中从这个 Table 读取 NFT Object，并进行处理或者组合。
 
@@ -58,7 +60,7 @@
     }
 ```
 
-这种定义方式给未来留了扩展性，比如未来有 ERC721 之外的 NFT 标准，也只需要新定义一种 struct，而 Object 本身不需要变更。[NFTObject](./solidity-rst/contracts/NFTObject.sol)
+这种定义方式给未来留了扩展性，比如未来有 ERC721 之外的 NFT 标准，也只需要新定义一种 struct，而 Object 本身不需要变更, 跨层的方案也不需要变更。[NFTObject](./solidity-rst/contracts/NFTObject.sol)
 
 ### 定义 RollupNFT 标准
 
@@ -86,6 +88,7 @@
         id: UID,
         contract_address: EVMAddress,
         token_id: u256, 
+        metadataID: ObjectRef,
     }
 
     struct Metadata has key{
@@ -103,10 +106,12 @@
 
 ```
 
-### 项目目标
+## 项目目标
 
 1. 研究在 Solidity 中通过 Object 模式表达 NFT，并和 Move 通过 Object 模式互通的可行性。
 2. 给出 Solidity 的合约示例
 3. 给出 Move 的合约示例
-4. 提供一个工具以及 Demo 项目（未完成）
+4. 提供一个工具用来生成 Offchain 的 State Tree 以及 Demo 项目（未完成）
 
+## 介绍视频
+1. https://youtu.be/lmaYbDG-1Xg
