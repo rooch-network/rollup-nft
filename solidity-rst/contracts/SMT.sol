@@ -3,7 +3,8 @@
 pragma solidity ^0.8.17;
 
 /// A solidity Sparse Merkle Tree implementation
-/// TODO optimize the SMT according to Rust version SMT(https://github.com/rooch-network/smt)
+/// Basic source from https://github.com/wanseob/smt-rollup/blob/master/contracts/SMT.sol
+/// optimize the SMT according to Rust version SMT(https://github.com/rooch-network/smt)
 library SMT {
     // in Solidity: SMT.create_literal_hash("SPARSE_MERKLE_PLACEHOLDER_HASH")
     bytes32 constant public PLACE_HOLDER = 0x5350415253455f4d45524b4c455f504c414345484f4c4445525f484153480000;
