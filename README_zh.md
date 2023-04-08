@@ -113,5 +113,7 @@ Rollup NFT 发行工具。这是一个演示项目，用来验证状态扩容以
 3. 给出 Move 的合约示例
 4. 提供一个工具用来生成 Offchain 的 State Tree 以及 Demo 项目（未完成）
 
-## 介绍视频
-1. https://youtu.be/lmaYbDG-1Xg
+## 相关链接
+1. 对这个项目思路的中文介绍视频 https://youtu.be/lmaYbDG-1Xg @jolestar
+2. Rooch Discord: [rooch](https://discord.gg/rooch)
+3. [Sparse Merkle Tree](https://github.com/rooch-network/smt) Rust version

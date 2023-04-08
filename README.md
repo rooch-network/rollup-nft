@@ -114,4 +114,12 @@ Usage example: [ExampleRollupNFT](./solidity-rst/contracts/ExampleRollupNFT.sol)
 3. Provide Move contract examples.
 4. Provide a tool to generate the Offchain state tree and demo project (not yet completed).
 
+## Links
+1. Chinese introduction video about the project concept: https://youtu.be/lmaYbDG-1Xg @jolestar
+2. Rooch Discord: [rooch](https://discord.gg/rooch)
+3. [Sparse Merkle Tree](https://github.com/rooch-network/smt) Rust version
+
+
+
+
 
