@@ -11,6 +11,7 @@
 
 这些问题都是开放式问题，当前并没有很好的解决方案。但我们正在尝试再这个方向上进行一些探索。
 
+![Rollup State tree](./rst.png)
 ## 技术思路
 
 1. 借鉴 Move 中的 Object 模型，在 Solidity 中引入一种基于 Object Struct 的 NFT 定义方式。
