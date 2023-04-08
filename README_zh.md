@@ -78,6 +78,30 @@
 使用案例：[ExampleRollupNFT](./solidity-rst/contracts/ExampleRollupNFT.sol)
 
 
+### 定义 Move 的 NFT Object
+
+```rust
+    struct ERC721 has key{
+        id: UID,
+        contract_address: EVMAddress,
+        token_id: u256, 
+    }
+
+    struct Metadata has key{
+        id: UID,
+        name: String,
+        description: String,
+        image: String,
+        animation_url: String,
+        external_url: String,
+        background_color: String,
+        youtube_url: String,
+        attributes_key: vector<String>,
+        attributes_value: vector<String>, 
+    }
+
+```
+
 ### 项目目标
 
 1. 研究在 Solidity 中通过 Object 模式表达 NFT，并和 Move 通过 Object 模式互通的可行性。
