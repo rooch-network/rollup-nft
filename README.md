@@ -1,6 +1,9 @@
 # rollup-nft
 
+[中文](./README_zh.md)
+
 A rollup tools for massive NFT issuance. This is a demo project.
+
 
 ## Usages
 

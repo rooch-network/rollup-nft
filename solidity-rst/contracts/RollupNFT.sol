@@ -44,30 +44,34 @@ contract RollupNFT is ERC721, IRollupNFT  {
         revert("directly mint is not allowed");
     }
 
-    function mintWithProof(bytes calldata nftObject, bytes calldata inclusionProof) public {
+    function mintWithProof(bytes calldata object_bytes, bytes calldata inclusionProof) public {
         SMT.Proof memory proof = abi.decode(inclusionProof, (SMT.Proof));
-        NFTObject.ERC721Object memory object = abi.decode(nftObject, (NFTObject.ERC721Object));
-        require(object.data.contractAddress == address(this), "invalid contract address");
-        bytes32 value = keccak256(nftObject);
-        require(SMT.inclusionProof(stateRoot.next, object.data.id, value, proof.siblings), "invalid proof");    
-        _mint(object.owner, object.data.tokenId);
+        NFTObject.Object memory object = abi.decode(object_bytes, (NFTObject.Object));
+        NFTObject.ERC721 memory nft = abi.decode(object.data, (NFTObject.Object));
+        require(nft.contractAddress == address(this), "invalid contract address");
+        bytes32 value = keccak256(object_bytes);
+        require(SMT.inclusionProof(stateRoot.next, nft.id, value, proof.siblings), "invalid proof");    
+        _mint(object.owner, nft.tokenId);
     }
 
     function moveToOffchain(uint256 tokenId, bytes calldata noInclusionProof) public {
         require(_isApprovedOrOwner(_msgSender(), tokenId), "caller is not owner nor approved");
         SMT.Proof memory proof = abi.decode(noInclusionProof, (SMT.Proof));
-        NFTObject.ERC721Object memory object = NFTObject.createObject(address(this), tokenId, ownerOf(tokenId));
-        require(SMT.nonInclusionProof(stateRoot.next, object.data.id, proof.siblings), "invalid proof");
+        //TODO handle metadata
+        NFTObject.ERC721 memory nft = NFTObject.newERC721(address(this), tokenId, bytes32(0));
+        NFTObject.Object memory object = NFTObject.newObject(nft, ownerOf(tokenId));
+        require(SMT.nonInclusionProof(stateRoot.next, nft.id, proof.siblings), "invalid proof");
         _burn(tokenId);
         bytes32 value = keccak256(abi.encode(object));
-        SMT.update(stateRoot, object.data.id, value, proof.siblings);
+        SMT.update(stateRoot, nft.id, value, proof.siblings);
     }
 
-    function ownerOfWithProof(bytes calldata nftObject, bytes calldata inclusionProof) public view returns (address) {
+    function ownerOfWithProof(bytes calldata object_bytes, bytes calldata inclusionProof) public view returns (address) {
         SMT.Proof memory proof = abi.decode(inclusionProof, (SMT.Proof));
-        NFTObject.ERC721Object memory object = abi.decode(nftObject, (NFTObject.ERC721Object));
-        bytes32 value = keccak256(nftObject);
-        require(SMT.inclusionProof(stateRoot.next, object.data.id, value, proof.siblings), "invalid proof");
+        NFTObject.Object memory object = abi.decode(object_bytes, (NFTObject.Object));
+        NFTObject.ERC721 memory nft = abi.decode(object.data, (NFTObject.ERC721));
+        bytes32 value = keccak256(object_bytes);
+        require(SMT.inclusionProof(stateRoot.next, nft.id, value, proof.siblings), "invalid proof");
         return object.owner;
     }
 
