@@ -2,8 +2,6 @@
 
 English|[中文](./README_zh.md)
 
-A rollup tools for massively issuing NFTs. This is a demonstration project used to validate ideas for state scaling.
-
 a Rollup NFT issuing tool. This is a demo project used to validate ideas for state scaling and the interoperability of Layer1 and Layer2 based on Object mode.
 
 ## Background Description
